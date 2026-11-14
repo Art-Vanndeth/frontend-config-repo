@@ -1,0 +1,7 @@
+apiVersion: v2
+name: cstad-frontend
+description: Helm chart for CSTAD DevOps Final Project Next.js Frontend (Dynamic Environment Support)
+type: application
+version: 1.0.0
+appVersion: "v1.0.1"
+

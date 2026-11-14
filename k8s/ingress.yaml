@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cstad-frontend-ingress
+  namespace: cstad-devops
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - app.devops.cstad.edu.kh
+      secretName: cstad-frontend-tls
+  rules:
+    - host: app.devops.cstad.edu.kh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cstad-frontend-service
+                port:
+                  number: 80
+

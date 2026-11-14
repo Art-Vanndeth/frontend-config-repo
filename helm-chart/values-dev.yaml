@@ -1,0 +1,27 @@
+replicaCount: 1
+environment: dev
+
+service:
+  type: NodePort
+  nodePort: 31080
+
+config:
+  NODE_ENV: "production"
+  NEXT_PUBLIC_APP_ENV: "dev"
+  NEXT_PUBLIC_API_URL: "https://api-dev.devops.cstad.edu.kh"
+
+ingress:
+  enabled: true
+  host: app-dev.devops.cstad.edu.kh
+  tlsSecretName: cstad-frontend-dev-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+

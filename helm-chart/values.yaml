@@ -1,0 +1,44 @@
+replicaCount: 2
+
+environment: production
+
+image:
+  repository: docker.devops.cstad.edu.kh/cstad-frontend
+  tag: "v1.0.1"
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: nexus-registry-secret
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 3000
+  nodePort: 30080
+
+config:
+  NODE_ENV: "production"
+  NEXT_PUBLIC_APP_ENV: "production"
+  NEXT_PUBLIC_API_URL: "https://api.devops.cstad.edu.kh"
+  PORT: "3000"
+
+secrets:
+  FRONTEND_INTERNAL_TOKEN: "cstad-frontend-session-secret-2026"
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  host: app.devops.cstad.edu.kh
+  tlsSecretName: cstad-frontend-tls
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
